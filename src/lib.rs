@@ -5,7 +5,7 @@ use std::sync::Arc;
 // https://github.com/robbert-vdh/nih-plug/blob/master/plugins/examples/gain/src/lib.rs to get
 // started
 
-struct QompanderRs {
+pub struct QompanderRs {
     params: Arc<QompanderRsParams>,
 }
 
@@ -142,7 +142,7 @@ impl ClapPlugin for QompanderRs {
     const CLAP_SUPPORT_URL: Option<&'static str> = None;
 
     // Don't forget to change these features
-    const CLAP_FEATURES: &'static [ClapFeature] = &[ClapFeature::AudioEffect, ClapFeature::Stereo];
+    const CLAP_FEATURES: &'static [ClapFeature] = &[ClapFeature::AudioEffect, ClapFeature::Mono, ClapFeature::Expander, ClapFeature::Compressor, ClapFeature::Limiter];
 }
 
 impl Vst3Plugin for QompanderRs {
@@ -150,8 +150,8 @@ impl Vst3Plugin for QompanderRs {
 
     // And also don't forget to change these categories
     const VST3_SUBCATEGORIES: &'static [Vst3SubCategory] =
-        &[Vst3SubCategory::Fx, Vst3SubCategory::Dynamics];
+        &[Vst3SubCategory::Fx, Vst3SubCategory::Mono, Vst3SubCategory::Dynamics];
 }
 
-nih_export_clap!(QompanderRs);
-nih_export_vst3!(QompanderRs);
+// nih_export_clap!(QompanderRs);
+// nih_export_vst3!(QompanderRs);
