@@ -3,6 +3,13 @@ use nih_plug_vizia::ViziaState;
 mod editor;
 use atomic_float::AtomicF32;
 use std::sync::Arc;
+use faust_state::DspHandle;
+use faust_state::StateHandle;
+// use crate::faust::Qompander;
+
+mod faust {
+    include!(concat!(env!("OUT_DIR"), "/dsp.rs"));
+}
 
 /// The time it takes for the peak meter to decay by 12 dB after switching to complete silence.
 const PEAK_METER_DECAY_MS: f64 = 150.0;
@@ -17,6 +24,12 @@ pub struct QompanderRs {
     ///
     /// This is stored as voltage gain.
     peak_meter: Arc<AtomicF32>,
+    dsp: DspHandle<faust::Qompander>,
+    // state: <DspHandle<faust::Qompander> as Default>::State,
+    // dsp: DspHandle::<mydsp>::new().0,
+    state: StateHandle,
+
+    // state: f32,
 }
 
 #[derive(Params)]
@@ -34,10 +47,15 @@ struct QompanderRsParams {
 
 impl Default for QompanderRs {
     fn default() -> Self {
+        let (dsp, mut state) = DspHandle::<faust::Qompander>::new();
         Self {
             params: Arc::new(QompanderRsParams::default()),
             peak_meter_decay_weight: 1.0,
             peak_meter: Arc::new(AtomicF32::new(util::MINUS_INFINITY_DB)),
+            dsp,
+            // dsp: DspHandle::<Qompander>::new(),
+            // let (dsp, mut state) = DspHandle::<faust::Volume>::new();
+            state,
         }
     }
 }

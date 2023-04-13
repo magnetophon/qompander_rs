@@ -371,7 +371,7 @@ checksum = "c688fc74432808e3eb684cae8830a86be1d66a2bd58e1f248ed0960a590baf6f"
 dependencies = [
  "glob",
  "libc",
- "libloading",
+ "libloading 0.7.4",
 ]
 
 [[package]]
@@ -411,7 +411,7 @@ version = "4.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3f9644cd56d6b87dbe899ef8b053e331c0637664e9e21a33dfcdc36093f5c5c4"
 dependencies = [
- "heck",
+ "heck 0.4.1",
  "proc-macro2",
  "quote",
  "syn 2.0.14",
@@ -787,7 +787,7 @@ version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ac1b7517328c04c2aa68422fc60a41b92208182142ed04a25879c26c8f878794"
 dependencies = [
- "libloading",
+ "libloading 0.7.4",
 ]
 
 [[package]]
@@ -830,6 +830,42 @@ checksum = "aa68f1b12764fab894d2755d2518754e71b4fd80ecfb822714a1206c2aab39bf"
 dependencies = [
  "cc",
  "libc",
+]
+
+[[package]]
+name = "fastrand"
+version = "1.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e51093e27b0797c359783294ca4f0a911c270184cb10f85783b118614a1501be"
+dependencies = [
+ "instant",
+]
+
+[[package]]
+name = "faust-build"
+version = "0.1.0"
+source = "git+https://github.com/Frando/rust-faust.git?branch=main#1c9d11a8d54562185dca14c306d12a48aff12a28"
+dependencies = [
+ "heck 0.3.3",
+ "tempfile",
+]
+
+[[package]]
+name = "faust-state"
+version = "0.1.0"
+source = "git+https://github.com/Frando/rust-faust.git?branch=main#1c9d11a8d54562185dca14c306d12a48aff12a28"
+dependencies = [
+ "faust-types",
+ "rtrb 0.1.4",
+]
+
+[[package]]
+name = "faust-types"
+version = "0.1.0"
+source = "git+https://github.com/Frando/rust-faust.git?branch=main#1c9d11a8d54562185dca14c306d12a48aff12a28"
+dependencies = [
+ "jack 0.7.3",
+ "libm",
 ]
 
 [[package]]
@@ -1029,7 +1065,7 @@ dependencies = [
  "glutin_egl_sys",
  "glutin_glx_sys",
  "glutin_wgl_sys",
- "libloading",
+ "libloading 0.7.4",
  "objc2",
  "once_cell",
  "raw-window-handle 0.5.2",
@@ -1097,6 +1133,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8a9ee70c43aaf417c914396645a0fa852624801b24ebb7ae78fe8272889ac888"
 dependencies = [
  "ahash",
+]
+
+[[package]]
+name = "heck"
+version = "0.3.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "6d621efb26863f0e9924c6ac577e8275e5e6b77455db64ffa6c65c904e9e132c"
+dependencies = [
+ "unicode-segmentation",
 ]
 
 [[package]]
@@ -1218,15 +1263,39 @@ checksum = "453ad9f582a441959e5f0d088b02ce04cfe8d51a8eaf077f12ac6d3e94164ca6"
 
 [[package]]
 name = "jack"
+version = "0.7.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d79b205ea723e478eb31a91dcdda100912c69cc32992eb7ba26ec0bbae7bebe4"
+dependencies = [
+ "bitflags",
+ "jack-sys 0.2.2",
+ "lazy_static",
+ "libc",
+ "log",
+]
+
+[[package]]
+name = "jack"
 version = "0.11.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0e5a18a3c2aefb354fb77111ade228b20267bdc779de84e7a4ccf7ea96b9a6cd"
 dependencies = [
  "bitflags",
- "jack-sys",
+ "jack-sys 0.5.1",
  "lazy_static",
  "libc",
  "log",
+]
+
+[[package]]
+name = "jack-sys"
+version = "0.2.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "57983f0d72dfecf2b719ed39bc9cacd85194e1a94cb3f9146009eff9856fef41"
+dependencies = [
+ "lazy_static",
+ "libc",
+ "libloading 0.6.7",
 ]
 
 [[package]]
@@ -1238,7 +1307,7 @@ dependencies = [
  "bitflags",
  "lazy_static",
  "libc",
- "libloading",
+ "libloading 0.7.4",
  "log",
  "pkg-config",
 ]
@@ -1333,6 +1402,16 @@ name = "libc"
 version = "0.2.141"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3304a64d199bb964be99741b7a14d26972741915b3649639149b2479bb46f4b5"
+
+[[package]]
+name = "libloading"
+version = "0.6.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "351a32417a12d5f7e82c368a66781e307834dae04c6ce0cd4456d52989229883"
+dependencies = [
+ "cfg-if 1.0.0",
+ "winapi",
+]
 
 [[package]]
 name = "libloading"
@@ -1568,7 +1647,7 @@ dependencies = [
  "core-foundation",
  "cpal",
  "crossbeam",
- "jack",
+ "jack 0.11.4",
  "lazy_static",
  "libc",
  "log",
@@ -1579,7 +1658,7 @@ dependencies = [
  "objc",
  "parking_lot",
  "raw-window-handle 0.4.3",
- "rtrb",
+ "rtrb 0.2.3",
  "serde",
  "serde_json",
  "vst3-sys",
@@ -2038,6 +2117,9 @@ name = "qompander_rs"
 version = "0.1.0"
 dependencies = [
  "atomic_float",
+ "faust-build",
+ "faust-state",
+ "faust-types",
  "nih_plug",
  "nih_plug_vizia",
 ]
@@ -2180,6 +2262,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "20ec2d3e3fc7a92ced357df9cebd5a10b6fb2aa1ee797bf7e9ce2f17dffc8f59"
 dependencies = [
  "bytemuck",
+]
+
+[[package]]
+name = "rtrb"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "318256ac02f7e11a48a10339ba5dca8bd7eb17496abf384e8ea909bb2ae5275f"
+dependencies = [
+ "cache-padded",
 ]
 
 [[package]]
@@ -2427,6 +2518,19 @@ dependencies = [
  "libc",
  "wasm-bindgen",
  "web-sys",
+ "windows-sys 0.45.0",
+]
+
+[[package]]
+name = "tempfile"
+version = "3.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b9fbec84f381d5795b08656e4912bec604d162bff9291d6189a78f4c8ab87998"
+dependencies = [
+ "cfg-if 1.0.0",
+ "fastrand",
+ "redox_syscall 0.3.5",
+ "rustix",
  "windows-sys 0.45.0",
 ]
 

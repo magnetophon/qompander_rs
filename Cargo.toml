@@ -20,6 +20,12 @@ crate-type = ["cdylib", "lib"]
 nih_plug = { git = "https://github.com/robbert-vdh/nih-plug.git", features = ["assert_process_allocs", "standalone"] }
 nih_plug_vizia = { git = "https://github.com/robbert-vdh/nih-plug.git" }
 atomic_float = "0.1"
+faust-types = { version = "0.1", git = "https://github.com/Frando/rust-faust.git", branch = "main" }
+faust-state = { version = "0.1", git = "https://github.com/Frando/rust-faust.git", branch = "main" }
+
+[build-dependencies]
+faust-build = { version = "0.1", git = "https://github.com/Frando/rust-faust.git", branch = "main" }
+
 
 [profile.release]
 lto = "thin"
