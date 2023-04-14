@@ -25,11 +25,7 @@ pub struct QompanderRs {
     /// This is stored as voltage gain.
     peak_meter: Arc<AtomicF32>,
     dsp: DspHandle<faust::Qompander>,
-    // state: <DspHandle<faust::Qompander> as Default>::State,
-    // dsp: DspHandle::<mydsp>::new().0,
     state: StateHandle,
-
-    // state: f32,
 }
 
 #[derive(Params)]
@@ -53,8 +49,6 @@ impl Default for QompanderRs {
             peak_meter_decay_weight: 1.0,
             peak_meter: Arc::new(AtomicF32::new(util::MINUS_INFINITY_DB)),
             dsp,
-            // dsp: DspHandle::<Qompander>::new(),
-            // let (dsp, mut state) = DspHandle::<faust::Volume>::new();
             state,
         }
     }
@@ -152,6 +146,9 @@ impl Plugin for QompanderRs {
         self.peak_meter_decay_weight = 0.25f64
             .powf((buffer_config.sample_rate as f64 * PEAK_METER_DECAY_MS / 1000.0).recip())
             as f32;
+
+        // Init DSP with a given sample rate
+        self.dsp.init(buffer_config.sample_rate as i32);
         // Resize buffers and perform other potentially expensive initialization operations here.
         // The `reset()` function is always called right after this function. You can remove this
         // function if you do not need it.
@@ -197,6 +194,14 @@ impl Plugin for QompanderRs {
                     .store(new_peak_meter, std::sync::atomic::Ordering::Relaxed)
             };
         }
+        let len = buffer.samples();
+        let dsp_input: Vec<&[f32]> =
+            buffer.as_slice_immutable().iter().map(|slice| slice as &[_]).collect();
+        let dsp_output = buffer.as_slice();
+
+        // Call the update_and_compute handler on the Faust DSP. This first processes param changes
+        // from the State handler and then computes the outputs from the inputs and params.
+        self.dsp.update_and_compute(len as i32, &dsp_input, dsp_output);
 
         ProcessStatus::Normal
     }
